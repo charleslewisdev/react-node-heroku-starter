@@ -1,0 +1,17 @@
+{
+  "name": "react-node-heroku-starter",
+  "description": "Template for quickly creating Node + React web apps that can be deployed to Heroku in minutes",
+  "scripts": {},
+  "env": {},
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
