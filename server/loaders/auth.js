@@ -1,7 +1,6 @@
 const passport = require('passport');
 const {Strategy: JwtStrategy} = require('passport-jwt');
-const {getUserPermissions} = require('../services/user');
-const sequelize = require('../utils/sequelize').getSequelize();
+const {models} = require('../utils/sequelize').getSequelize();
 const {JWT_SECRET} = process.env;
 
 const init = (app) => {
@@ -20,10 +19,11 @@ const init = (app) => {
         return done(null, false);
       }
       try {
-        const user = await sequelize.models.User.findOne({
+        const user = await models.User.findOne({
           where: {
-            id: userId,
+            uuid: userId,
           },
+          include: models.Role,
         });
         if (!user) {
           return done(null, false);

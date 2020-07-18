@@ -1,4 +1,4 @@
-import {Home} from '@material-ui/icons';
+import {Business, Group, GroupWork, Home, HowToReg} from '@material-ui/icons';
 
 export default [
   {
@@ -8,28 +8,31 @@ export default [
     linkTo: '/',
   },
   {
-    displayName: 'Login',
-    name: 'login',
-    icon: Home,
-    linkTo: '/login',
+    displayName: 'Permissions',
+    name: 'permissions',
+    icon: HowToReg,
+    linkTo: '/permissions',
+    viewPermission: 'getPermissions',
   },
   {
-    displayName: 'Top Level Item',
-    name: 'home',
-    icon: Home,
-    nestedItems: [
-      {
-        displayName: 'Nested Item 1',
-        name: 'nestedItem1',
-        icon: Home,
-        linkTo: '/',
-      },
-      {
-        displayName: 'Nested Item 2',
-        name: 'nestedItem2',
-        icon: Home,
-        linkTo: '/',
-      },
-    ],
+    displayName: 'Roles',
+    name: 'roles',
+    icon: GroupWork,
+    linkTo: '/roles',
+    viewPermission: 'getRoles',
+  },
+  {
+    displayName: 'Users',
+    name: 'users',
+    icon: Group,
+    linkTo: '/users',
+    viewPermission: 'getUsers',
+  },
+  {
+    displayName: 'Organizations',
+    name: 'organizations',
+    icon: Business,
+    linkTo: '/organizations',
+    viewPermission: 'getOrganizations',
   },
 ];

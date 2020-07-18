@@ -1,5 +1,7 @@
+import {isAuthenticated} from 'utils/auth';
+
 const initialState = {
-  isDrawerOpen: false,
+  isDrawerOpen: isAuthenticated(),
 };
 
 const reducer = (state, action) => {

@@ -1,6 +1,26 @@
-const TMP_JWT =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTU5MTgxNTI2MH0.80GySWP6ElQAfqFHFDl-32xEJA0yfIbvMkv8B-R2wzQ';
+import {fetchWrapper} from './restApi';
 
-export const login = () => {
-  return TMP_JWT;
+export const login = async (profileObj) => {
+  return await fetchWrapper('POST', '/api/users/login', profileObj);
+};
+
+export const addUser = async (values) => {
+  const response = await fetchWrapper('POST', '/api/users/addUser', values);
+  return response;
+};
+
+export const getToken = async (userId) => {
+  return await fetchWrapper('POST', '/api/auth/getToken', {userId});
+};
+
+export const getUsers = async () => {
+  const response = await fetchWrapper('/api/users/getUsers');
+  return response;
+};
+
+export const updateUser = async (id, values) => {
+  return await fetchWrapper('PUT', '/api/users/updateUser', {
+    id,
+    ...values,
+  });
 };
