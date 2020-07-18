@@ -1,13 +1,31 @@
 const {Sequelize} = require('sequelize');
 const logger = require('./logger').getLogger();
-const {DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD, NODE_ENV} = process.env;
+const {DATABASE_URL, NODE_ENV} = process.env;
+
+const getDbParams = (dbUrl) => {
+  const [dialect, untrimmedUsername, pwAndHost, portAndDbName] = dbUrl.split(
+    ':'
+  );
+  const username = untrimmedUsername.slice(2);
+  const [password, host] = pwAndHost.split('@');
+  const [__, name] = portAndDbName.split('/');
+  return {
+    dialect,
+    host,
+    name,
+    password,
+    username,
+  };
+};
+
+const {dialect, host, name, password, username} = getDbParams(DATABASE_URL);
 
 const logging =
   NODE_ENV === 'production' ? false : (msg) => logger.verbose(msg);
 
-const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-  host: DB_HOST,
-  dialect: 'postgres',
+const sequelize = new Sequelize(name, username, password, {
+  host,
+  dialect,
   dialectOptions: {
     ssl: {
       require: true,
@@ -31,4 +49,4 @@ const getSequelize = () => {
   return sequelize;
 };
 
-module.exports = {getSequelize};
+module.exports = {getDbParams, getSequelize};

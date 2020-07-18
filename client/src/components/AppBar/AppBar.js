@@ -7,14 +7,14 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
-import {AccountMenu, SettingsMenu} from 'components/common';
+import {AccountMenu} from 'components/common';
 import {useLoginState} from 'contexts/Login';
 import {useMenuDispatch, useMenuState} from 'contexts/MenuDrawer';
-import useStyles from './AppBar.styles';
+import useStyles from './styles';
 import {APP_NAME} from '../../constants';
 
 const AppBar = ({children}) => {
-  const classes = useStyles();
+  const styles = useStyles();
 
   const {isLoggedIn} = useLoginState();
   const dispatch = useMenuDispatch();
@@ -25,7 +25,7 @@ const AppBar = ({children}) => {
   };
 
   return (
-    <MAppBar className={classes.root} position="fixed">
+    <MAppBar className={styles.AppBar} position="fixed">
       <Toolbar variant="dense">
         <div className="AppBar-left">
           <Tooltip title="Toggle Menu">
@@ -46,7 +46,6 @@ const AppBar = ({children}) => {
             because we are using a row-reverse flexbox to float them right
           */}
           {isLoggedIn && <AccountMenu />}
-          {isLoggedIn && <SettingsMenu />}
         </div>
       </Toolbar>
     </MAppBar>

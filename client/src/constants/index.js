@@ -1,1 +1,1 @@
-export const APP_NAME = 'NotifiMi';
+export const APP_NAME = 'React Starter';

@@ -4,6 +4,7 @@ import toastr from 'toastr';
 import App from 'containers/App';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
+import 'toastr/build/toastr.css';
 import {TOASTR_POSITION_CLASS} from 'constants/STYLES';
 
 toastr.options = {

@@ -1,5 +1,11 @@
 export {default as AccountMenu} from './AccountMenu';
+export {default as CenteredContent} from './CenteredContent';
+export {default as CopyToClipboardButton} from './CopyToClipboardButton';
+export {default as EditableTable} from './EditableTable';
+export {default as EditDialog} from './EditDialog';
+export {default as FlexContainer} from './FlexContainer';
 export {default as GlobalLoading} from './GlobalLoading';
 export {default as GlobalMessage} from './GlobalMessage';
 export {default as ProtectedRoute} from './ProtectedRoute';
-export {default as SettingsMenu} from './SettingsMenu';
+export {default as SpacerColumn} from './SpacerColumn';
+export {default as Table} from './Table';

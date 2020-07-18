@@ -1,36 +1,38 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import {GoogleLogin} from 'react-google-login';
 import toastr from 'toastr';
-import {Button, TextField} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
+import {CenteredContent} from 'components/common';
 import {useLoginDispatch, useLoginState} from 'contexts/Login';
 import {login} from 'services/users';
 import {setSession} from 'utils/auth';
+import useStyles from './styles';
 
-const useStyles = makeStyles((theme) => {
-  return {
-    spacerColumn: {
-      flexGrow: 1,
-    },
-    table: {
-      display: 'flex',
-      width: '100%',
-    },
-  };
-});
+const CLIENT_ID =
+  '834594867407-3n8jesva9gqcf09jp93i6ran7p772obj.apps.googleusercontent.com';
 
 const Login = ({location}) => {
+  const styles = useStyles();
+
   const dispatch = useLoginDispatch();
   const {isLoggedIn} = useLoginState();
-  const styles = useStyles();
 
   const {referrer} = location.state || {referrer: {pathname: '/'}};
 
-  const _handleSubmit = async () => {
-    const token = await login();
-    toastr.success('Login successful');
-    setSession(token);
-    dispatch({type: 'SET_IS_LOGGED_IN', isLoggedIn: true});
+  const _handleLoginFailure = (response) => {
+    console.error(response);
+    return toastr.error('Failed to login');
+  };
+
+  const _handleLoginSuccess = async ({profileObj}) => {
+    if (profileObj) {
+      const {status, token} = await login(profileObj);
+      if (status === 200) {
+        setSession(token);
+        dispatch({type: 'SET_IS_LOGGED_IN', isLoggedIn: true});
+        toastr.success('Login successful');
+      }
+    }
   };
 
   if (isLoggedIn) {
@@ -38,36 +40,15 @@ const Login = ({location}) => {
   }
 
   return (
-    <div className={styles.table}>
-      <div className={styles.spacerColumn} />
-      <div>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          id="username"
-          label="Username"
-          autoFocus
-          fullWidth
+    <CenteredContent>
+      <div className={styles.GoogleLogin}>
+        <GoogleLogin
+          clientId={CLIENT_ID}
+          onFailure={_handleLoginFailure}
+          onSuccess={_handleLoginSuccess}
         />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          id="password"
-          label="Password"
-          autoFocus
-          fullWidth
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          onClick={_handleSubmit}
-        >
-          Log In
-        </Button>
       </div>
-      <div className={styles.spacerColumn} />
-    </div>
+    </CenteredContent>
   );
 };
 
