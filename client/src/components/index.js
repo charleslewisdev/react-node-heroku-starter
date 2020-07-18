@@ -3,4 +3,7 @@ export {default as Home} from './Home';
 export {default as Login} from './Login';
 export {default as MenuDrawer} from './MenuDrawer';
 export {default as NotFound} from './NotFound';
-export {default as NotificationEditor} from './NotificationEditor';
+export {default as Organizations} from './Organizations';
+export {default as Permissions} from './Permissions';
+export {default as Roles} from './Roles';
+export {default as Users} from './Users';

@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import {ExpandLess, ExpandMore} from '@material-ui/icons';
 import {useMenuState} from 'contexts/MenuDrawer';
+import useHasPermission from 'hooks/useHasPermission';
 import useStyles from './MenuDrawer.styles';
 import MENU_ITEMS from '../../constants/MENU_ITEMS';
 
@@ -23,6 +24,7 @@ const MenuDrawer = () => {
   const classes = useStyles();
 
   const {isDrawerOpen} = useMenuState();
+  const hasPermission = useHasPermission();
 
   const initialMenuItemsExpandState = MENU_ITEMS.reduce((acc, {name}) => {
     acc[name] = false;
@@ -49,6 +51,10 @@ const MenuDrawer = () => {
       <List dense={true}>
         {MENU_ITEMS.map((menuItem, index) => {
           const Icon = menuItem.icon;
+          const canView = hasPermission(menuItem.viewPermission);
+          if (!canView) {
+            return <div key={index}></div>;
+          }
           return (
             <div key={index}>
               <ListItem
